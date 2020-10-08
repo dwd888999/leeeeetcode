@@ -65,7 +65,23 @@ struct TreeNode {
 
 class Solution {
 public:
+    TreeNode* p1;
+    TreeNode* p2;
+    TreeNode* prev;
     void recoverTree(TreeNode* root) {
-        
+        dfs(root);
+        int tmp = p1->val;
+        p1->val = p2->val;
+        p2->val = tmp;
+    }
+    void dfs(TreeNode* root){
+        if(root == NULL) return;
+        dfs(root->left); 
+        if(prev != NULL && prev->val > root->val){
+            if(p1 == NULL) p1 = prev;
+            p2 = root;
+        }
+        prev = root;
+        dfs(root->right);
     }
 };
